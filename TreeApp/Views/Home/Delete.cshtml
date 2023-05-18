@@ -1,0 +1,16 @@
+﻿<div class="align-content-center mx-auto mt-5 mb-5 px-5 pt-5 pb-5 rounded-5 bg-light col-4">
+    @using (Html.BeginForm("DeletePost", "Home", FormMethod.Post))
+    {
+        <h10>Name of the branch that you wanna delete:</h10>
+        <br />
+        <select id="Id" name="Id" required>
+            <option value=""> -- Wybierz --</option>
+            @foreach (var branch in Model)
+            {
+                <option value="@branch.Id">@branch.Id</option>
+            }
+        </select>
+        <br /><br />
+        <input class="btn btn-primary mt-10" type="submit" value="Submit" />
+    }
+</div>

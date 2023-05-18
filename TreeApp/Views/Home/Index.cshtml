@@ -1,0 +1,57 @@
+﻿@model IEnumerable<TreeApp.ViewModels.BranchViewModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+@functions {
+    List<int> usedBranchesId = new();
+    List<TreeApp.ViewModels.BranchViewModel> allBranches = new();
+    public string GetSomeString()
+    {
+        return string.Empty;
+    }
+    public void writeChildren(int Id)
+    {
+        foreach (var branch in allBranches)
+        {
+            <li>
+                @{
+                    if (branch.ParentId == Id && !(usedBranchesId.Contains(branch.Id)))
+                    {
+                        <span class="caret">@branch.Id.@branch.Name</span>
+                        <ul class="nested">
+                            @{
+                                usedBranchesId.Add(branch.Id);
+                                writeChildren(branch.Id);
+                            }
+                        </ul>
+                    }
+                }
+            </li>
+        }
+    }
+}
+<div>
+    @foreach (var branch in Model)
+    {
+        allBranches.Add(branch);
+    }
+    <ul id="myUL">
+        <li>
+            @foreach (var branch in allBranches)
+            {
+                if (branch.ParentId == 0 && !(usedBranchesId.Contains(branch.Id)))
+                {
+                    <span class="caret">
+                        @branch.Id.@branch.Name
+                    </span>
+                    <ul class="nested">
+                        @{
+                            usedBranchesId.Add(branch.Id);
+                            writeChildren(branch.Id);
+                        }
+                    </ul>
+                }
+            }
+        </li>
+    </ul>
+</div>
